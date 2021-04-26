@@ -19,7 +19,7 @@
 
 							Edit profile page🙄
 
-# Note :
+# Installation :
 -   Extract file
 -   Copy the main project folder
 -   Paste in  ***Wamp/www/*** or ***Xampp /htdocs/***
