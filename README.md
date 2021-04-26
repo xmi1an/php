@@ -26,4 +26,4 @@
 -   Open a browser and go to URL “http://localhost/phpmyadmin/”
 -   Then, click on the databases tab
 -   Create a database name ***userloginsystem***
--   Create a table name ***users*** and inset some dummy data.
+-   Create a table name ***users*** and insert some dummy data.
