@@ -41,7 +41,7 @@ if ($result)
   <?php
   if ($showAlert) {
     echo ' <article class="message is-success">
-    <div class="message-body">🎉 Your account is now created and you can <a href="index.php">login</a>
+    <div class="message-body">🥳 Your account is now created and you can <a href="index.php">login</a>
     </div>
   </article>';
   }
