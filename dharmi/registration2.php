@@ -79,14 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title> Reg </title>
 </head>
-<script>
-    // wait for 3 second
-    function myFunction() {
-        setTimeout(function() {
-            window.location.href = "login.php";
-        }, 3000);
-    }
-</script>
 <style>
     .errorColor {
         color: #D30000;
