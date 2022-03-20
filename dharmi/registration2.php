@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($ua)) {
         $addressError = "Address is mandatory";
     } else {
-        if (!preg_match("/^[a-zA-Z ]*$/", $ua)) {
-            $addressError2 = "Only letters and white space allowed";
+        if (!preg_match("/^[a-zA-Z, ]*$/", $ua)) {
+            $addressError2 = "Only letters and white space and ',' allowed";
         }
     }
 
@@ -49,8 +49,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($pw)) {
         $passwordError = "Password is mandatory";
     } else {
-        if (strlen($pw) < 8) {
-            $passwordError2 = "Password must be atleast 8 characters";
+        $uppercase = preg_match('@[A-Z]@', $pw);
+        $lowercase = preg_match('@[a-z]@', $pw);
+        $number    = preg_match('@[0-9]@', $pw);
+        $specialChars = preg_match('@[^\w]@', $pw);
+
+        if (isset($uppercase, $lowercase, $number, $specialChars)) {
+            if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($pw) < 8) {
+                $passwordError2 = "Password should be at least 8 characters in length and should include at least <br>one upper case letter, one number, and one special character.";
+            }
         } else {
             $ins = "insert into registration(uname,utype,uaddress,ucontact_no,email,upassword) values('$nm','$ut','$ua','$ctn','$em','$pw')";
             $check = mysqli_query($cn, $ins);
