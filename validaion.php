@@ -26,6 +26,7 @@
             }
         }
 
+
         if (empty($_POST["email"])) {
             $emailError = "Email is mandatory";
         } else {
