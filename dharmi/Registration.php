@@ -15,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nameError = "Name is mandatory";
         echo "Name is required";
     } else {
-        $nm = test_input($nm);
         if (!preg_match("/^[a-zA-Z ]*$/", $nm)) {
             echo "Only letters and white space allowed";
         }
@@ -25,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($ut)) {
         $typeError = "Type is mandatory";
     } else {
-        $ut = test_input($ut);
         if (!preg_match("/^[a-zA-Z ]*$/", $ut)) {
             echo "Only letters and white space allowed";
         }
@@ -35,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($ua)) {
         $addressError = "Address is mandatory";
     } else {
-        $ua = test_input($ua);
         if (!preg_match("/^[a-zA-Z ]*$/", $ua)) {
             echo "Only letters and white space allowed";
         }

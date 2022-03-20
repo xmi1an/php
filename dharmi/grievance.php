@@ -5,9 +5,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cn = mysqli_connect("localhost", "root", "", "dharmi") or die("connection not established");
     $gt = $_REQUEST["gtype"];
     $gr = $_REQUEST["grievance"];
-    $ins = "insert into grievance(gtype,grievance) values('$gt' , '$gr')";
-    mysqli_query($cn, $ins) or die("record not inserted");
-    echo "<script language'javascript'>alert('grievance insterted successfully');</script>";
+
+    // Validation for gtype
+    if (empty($gt)) {
+        $typeError = "Type is mandatory";
+    } else {
+        if (!preg_match("/^[a-zA-Z ]*$/", $gt)) {
+            $typeError2 = "Only letters and white space allowed";
+        }
+    }
+    // Validation for grievance
+    if (empty($gr)) {
+        $grievanceError = "Grievance is mandatory";
+    } else {
+        if (!preg_match("/^[a-zA-Z ]*$/", $gr)) {
+            $grievanceError2 = "Only letters and white space allowed";
+        } else {
+            $ins = "insert into grievance(gtype,grievance) values('$gt','$gr')";
+            mysqli_query($cn, $ins) or die("record not inserted");
+            echo "<script language'javascript'>alert('record insterted successfully');</script>";
+        }
+    }
     mysqli_close($cn);
 }
 ?>
@@ -15,6 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <title> grievance </title>
+    <style>
+        .errorColor {
+            color: #D30000;
+        }
+    </style>
 </head>
 
 <body>
@@ -38,6 +61,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </td>
                                 <td>
                                     <input type="text" name="gtype" placeholder="Enter your grievance type" />
+                                    <span class="errorColor">* <?php if (isset($typeError)) {
+                                                                    echo $typeError;
+                                                                } ?> <span>
+                                            <span class="errorColor"><?php if (isset($typeError2)) {
+                                                                            echo $typeError2;
+                                                                        } ?> </span>
                                 </td>
                             </tr>
                             <tr>
@@ -47,6 +76,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td>
                                     <textarea id="Grievance" name="grievance" placeholder="Enter your Grievance" rows="4" cols="50">
 			</textarea>
+                                    <span class="errorColor">* <?php if (isset($grievanceError)) {
+                                                                    echo $grievanceError;
+                                                                } ?> <span>
+                                            <span class="errorColor"><?php if (isset($grievanceError2)) {
+                                                                            echo $grievanceError2;
+                                                                        } ?> </span>
                                 </td>
                             </tr>
                             <tr>
