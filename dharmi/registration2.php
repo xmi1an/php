@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $emailError2 = "Invalid email format";
         }
     }
+
     // Validation for password
     if (empty($pw)) {
         $passwordError = "Password is mandatory";
@@ -91,7 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-
                 <form name="form1" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <center>
                         <table>
@@ -100,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <h2> Registration </h2>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td>
                                     <label>Name</label>
@@ -117,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </tr>
                             <tr>
                                 <td>
-                                    <label class="label">User Type</label>
+                                    <label class="label">UserType</label>
                                 </td>
                                 <td>
                                     <div class="field">
@@ -128,7 +127,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <option value="admin">Admin</option>
                                                     <option value="seller">Seller</option>
                                                 </select>
-
                                             </div>
                                             <span class="icon is-small is-left">
                                                 <i class="fas fa-globe"></i>
