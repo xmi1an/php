@@ -48,7 +48,7 @@ $publisher_image = $_GET['publisher_image'];
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
                     <h6 class="my-3"><?php $row['book_name'] ?> </h6>
-                    <img class="img-fluid" src="https://via.placeholder.com/750x500" alt="">
+                    <img class="img-fluid" src="<?php echo $row['book_image'] ?>" alt="">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem..</p>
                     <h3 class="my-3">Book Details</h3>
                     <ul>
