@@ -1,29 +1,9 @@
 <?php
 session_start();
 include_once 'include/config.php';
-// Get Book Details
 
-$book_id =  2; //$_GET['book_id'];
-/*
-$book_name = $_GET['book_name'];
-$book_author = $_GET['book_author'];
-$book_price = $_GET['book_price'];
-$book_image = $_GET['book_image'];
-$book_description = $_GET['book_description'];
-$book_category = $_GET['book_category'];
-$book_pages = $_GET['book_pages'];
-$book_language = $_GET['book_language'];
+$book_no = $_GET['booknumber'];
 
-// Get Publisher Details
-$publisher_id = $_GET['publisher_id'];
-$publisher_name = $_GET['publisher_name'];
-$publisher_address = $_GET['publisher_address'];
-$publisher_phone = $_GET['publisher_phone'];
-$publisher_email = $_GET['publisher_email'];
-$publisher_website = $_GET['publisher_website'];
-$publisher_description = $_GET['publisher_description'];
-$publisher_image = $_GET['publisher_image'];
-*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +26,7 @@ $publisher_image = $_GET['publisher_image'];
         <div class="row justify-content-center gx-5">
             <div class="col-md-4 bg-light border rounded">
                 <?php
-                $sql = "select * from bookmaster where bno = '$book_id'";
+                $sql = "select * from bookmaster where bno = '$book_no'";
                 $query = mysqli_query($con, $sql);
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
