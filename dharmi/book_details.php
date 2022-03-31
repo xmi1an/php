@@ -1,8 +1,10 @@
 <?php
 session_start();
-include_once 'config/database.php';
+include_once 'include/config.php';
 // Get Book Details
-$book_id = $_GET['book_id'];
+
+$book_id =  2; //$_GET['book_id'];
+/*
 $book_name = $_GET['book_name'];
 $book_author = $_GET['book_author'];
 $book_price = $_GET['book_price'];
@@ -21,7 +23,7 @@ $publisher_email = $_GET['publisher_email'];
 $publisher_website = $_GET['publisher_website'];
 $publisher_description = $_GET['publisher_description'];
 $publisher_image = $_GET['publisher_image'];
-
+*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,55 +37,56 @@ $publisher_image = $_GET['publisher_image'];
 </head>
 
 <body>
+    <?php // include("header.php"); 
+    ?>
     <!-- Page Content -->
     <div class="container">
         <!-- Portfolio Item Heading -->
-        <h1 class="my-4 text-center">Book Detail </h1>
         <!-- Portfolio Item Row -->
         <div class="row justify-content-center gx-5">
             <div class="col-md-4 bg-light border rounded">
                 <?php
-                $sql = "select * from bookmaster where bookdetails = '$bookdetails' ";
+                $sql = "select * from bookmaster where bno = '$book_id'";
                 $query = mysqli_query($con, $sql);
                 while ($row = mysqli_fetch_array($query)) {
                 ?>
-                    <h6 class="my-3"><?php $row['book_name'] ?> </h6>
-                    <img class="img-fluid" src="<?php echo $row['book_image'] ?>" alt="">
+                    <h6 class="my-3"><?php $row['bname'] ?> </h6>
+                    <img class="img-fluid" src="<?php echo $row['bphoto'] ?>">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem..</p>
-                    <h3 class="my-3">Book Details</h3>
-                    <ul>
-                        <li>Book Name: <?php echo $row['book_name'] ?></li>
-                        <li>Book Author: <?php echo $row['book_author'] ?></li>
-                        <li>Book Price: <?php echo $row['book_price'] ?></li>
-                        <li>Book Image: <?php echo $row['book_image'] ?></li>
-                        <li>Book Description: <?php echo $row['book_description'] ?></li>
-                        <li>Book Category: <?php echo $row['book_category'] ?></li>
-                        <li>Book Pages: <?php echo $row['book_pages'] ?></li>
-                        <li>Book Language: <?php echo $row['book_language'] ?></li>
-                    <?php } ?>
-
-                    </ul>
             </div>
             <div class="col-md-6 bg-light border rounded">
-                <h3 class="my-3 text-center">Seller Details</h3>
-                <?php $sql = "select * from seller_details where seller_id = '$seller_id' ";
+                <h3 class="my-3 text-primary">Book Details</h3>
+                <ul>
+                    <li>Book Name: <?php echo $row['bname'] ?></li>
+                    <li>Book Author: <?php echo $row['bauthor'] ?></li>
+                    <li>Book Actual Price: <?php echo $row['bactualprice'] ?></li>
+                    <li>Book Sell Price: <?php echo $row['bsellprice'] ?></li>
+                    <li>Book Edition: <?php echo $row['bedition'] ?></li>
+                    <li>Book Remark: <?php echo $row['bremark'] ?></li>
+                <?php } ?>
+
+                <h3 class="my-3 text-center text-warning">Seller Details</h3>
+                <?php
+                $sql = "select * from registration";
                 $query = mysqli_query($con, $sql);
-                while ($row = mysqli_fetch_array($query)) { ?>
+                while ($row = mysqli_fetch_array($query)) {
+                ?>
                     <p>Lorem ipsum dolor sit amet..</p>
                     <h3 class="my-3">Seller Details</h3>
                     <ul>
                         <!-- Seller Name -->
-                        <li><?php echo $row['seller_name']; ?></li>
+                        <li>Seller Name : <?php echo $row['uname']; ?></li>
                         <!-- Seller Address -->
-                        <li><?php echo $row['seller_address']; ?></li>
+                        <li>Seller Address : <?php echo $row['uaddress']; ?></li>
                         <!-- Seller Contact -->
-                        <li><?php echo $row['seller_contact']; ?></li>
+                        <li>Seller Contact : <?php echo $row['contactno']; ?></li>
                         <!-- Seller Email -->
-                        <li><?php echo $row['seller_email']; ?></li>
+                        <li>Seller Email : <?php echo $row['email']; ?></li>
                     </ul>
-                <?php } ?>
-                <button type="button" class="btn btn-success">Contact Seller</button>
-                <button onclick="history.back()" type="button" class="btn btn-dark">Back</button>
+                <?php  }  ?>
+
+                <button style="background-color: #008CBA; color: white;" type="button">Contact Seller</button>
+                <button style="background-color: #e7e7e7; color: black;" onclick="history.back()" type="button" class="btn btn-dark">Back</button>
             </div>
         </div>
         <!-- /.row -->
