@@ -55,7 +55,7 @@ $publisher_image = $_GET['publisher_image'];
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem..</p>
             </div>
             <div class="col-md-6 bg-light border rounded">
-                <h3 class="my-3 text-primary">Book Details</h3>
+                <h3 class="my-3">Book Details</h3>
                 <ul>
                     <li>Book Name: <?php echo $row['bname'] ?></li>
                     <li>Book Author: <?php echo $row['bauthor'] ?></li>
@@ -65,7 +65,7 @@ $publisher_image = $_GET['publisher_image'];
                     <li>Book Remark: <?php echo $row['bremark'] ?></li>
                 <?php } ?>
 
-                <h3 class="my-3 text-center text-warning">Seller Details</h3>
+                <h3 class="my-3 text-center">Seller Details</h3>
                 <?php
                 $sql = "select * from registration";
                 $query = mysqli_query($con, $sql);
