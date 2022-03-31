@@ -61,6 +61,7 @@ $publisher_image = $_GET['publisher_image'];
                         <li>Book Pages: <?php echo $row['book_pages'] ?></li>
                         <li>Book Language: <?php echo $row['book_language'] ?></li>
                     <?php } ?>
+
                     </ul>
             </div>
             <div class="col-md-6 bg-light border rounded">
