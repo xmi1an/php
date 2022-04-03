@@ -2,7 +2,7 @@
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $cn = mysqli_connect("localhost", "root", "", "dharmi") or die("connection not established");
+    $cn = mysqli_connect("localhost", "root", "", "test") or die("connection not established");
     $nm = $_REQUEST["name"];
     $ut = $_REQUEST["type"];
     $ua = $_REQUEST["address"];
@@ -13,19 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validation for name
     if (empty($nm)) {
         $nameError = "Name is mandatory";
-        echo "Name is required";
     } else {
         if (!preg_match("/^[a-zA-Z ]*$/", $nm)) {
-            echo "Only letters and white space allowed";
-        }
-    }
-
-    // Validation for type
-    if (empty($ut)) {
-        $typeError = "Type is mandatory";
-    } else {
-        if (!preg_match("/^[a-zA-Z ]*$/", $ut)) {
-            echo "Only letters and white space allowed";
+            $nameError2 = "Only letters and white space allowed";
         }
     }
 
@@ -33,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($ua)) {
         $addressError = "Address is mandatory";
     } else {
-        if (!preg_match("/^[a-zA-Z ]*$/", $ua)) {
-            echo "Only letters and white space allowed";
+        if (!preg_match("/^[a-zA-Z, ]*$/", $ua)) {
+            $addressError2 = "Only letters and white space and ',' allowed";
         }
     }
 
@@ -42,9 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($ctn)) {
         $contactnoError = "Contact no is mandatory";
     } else {
-        $ctn = test_input($ctn);
         if (!preg_match("/^[0-9]*$/", $ctn)) {
-            echo "Only numbers allowed";
+            $contactnoError2 = "Only numbers allowed";
         }
     }
 
@@ -52,36 +41,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($em)) {
         $emailError = "Email is mandatory";
     } else {
-        $em = test_input($em);
         if (!filter_var($em, FILTER_VALIDATE_EMAIL)) {
-            echo "Invalid email format";
+            $emailError2 = "Invalid email format";
         }
     }
+
     // Validation for password
     if (empty($pw)) {
         $passwordError = "Password is mandatory";
     } else {
-        if (strlen($pw) < 8) {
-            echo "Password must be atleast 8 characters";
+        $uppercase = preg_match('@[A-Z]@', $pw);
+        $lowercase = preg_match('@[a-z]@', $pw);
+        $number    = preg_match('@[0-9]@', $pw);
+        $specialChars = preg_match('@[^\w]@', $pw);
+
+        if (isset($uppercase, $lowercase, $number, $specialChars)) {
+            if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($pw) < 8) {
+                $passwordError2 = "Password should be at least 8 characters in length and should include at least <br>one upper case letter, one number, and one special character.";
+            }
         } else {
             $ins = "insert into registration(uname,utype,uaddress,ucontact_no,email,upassword) values('$nm','$ut','$ua','$ctn','$em','$pw')";
             $check = mysqli_query($cn, $ins);
             if ($check) {
-                echo ("Data Inserted");
+                $_SESSION["unm"] = $em;
+                $_SESSION["utype"] = $ut;
+                echo "<script language'javascript'> alert('Registration Successful! Now you can Login !'); window.location.href = 'login.php';</script>";
             } else {
                 mysqli_error($cn);
             }
-
-            echo "<script language'javascript'>alert('record insterted successfully');</script>";
-            $_SESSION["unm"] = $em;
-            $_SESSION["utype"] = $ut;
-            header("location:home.php");
         }
     }
-
-
-
-
     mysqli_close($cn);
 }
 ?>
@@ -89,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 
 <head>
-    <title> reg </title>
+    <title> Reg </title>
 </head>
 <style>
     .errorColor {
@@ -103,7 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-
                 <form name="form1" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <center>
                         <table>
@@ -112,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <h2> Registration </h2>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td>
                                     <label>Name</label>
@@ -121,18 +108,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="text" name="name" placeholder="Enter your Name" />
                                     <span class="errorColor">* <?php if (isset($nameError)) {
                                                                     echo $nameError;
-                                                                } ?> </span>
+                                                                } ?> <span>
+                                            <span class="errorColor"><?php if (isset($nameError2)) {
+                                                                            echo $nameError2;
+                                                                        } ?> </span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label>User Type</label>
+                                    <label class="label">UserType</label>
                                 </td>
                                 <td>
-                                    <input type="text" name="type" placeholder="Enter your User Type" />
-                                    <span class="errorColor">* <?php if (isset($typeError)) {
-                                                                    echo $typeError;
-                                                                } ?> </span>
+                                    <div class="field">
+                                        <div class="control has-icons-left">
+                                            <div class="select is-small">
+                                                <select name="type" required>
+                                                    <option selected value="buyer">Buyer</option>
+                                                    <option value="admin">Admin</option>
+                                                    <option value="seller">Seller</option>
+                                                </select>
+                                            </div>
+                                            <span class="icon is-small is-left">
+                                                <i class="fas fa-globe"></i>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -143,7 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="text" name="address" placeholder="Enter your Address" />
                                     <span class="errorColor">* <?php if (isset($addressError)) {
                                                                     echo $addressError;
-                                                                } ?> </span>
+                                                                } ?> <span>
+                                            <span class="errorColor"><?php if (isset($addressError2)) {
+                                                                            echo $addressError2;
+                                                                        } ?> </span>
                                 </td>
                             </tr>
                             <tr>
@@ -154,7 +157,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="text" name="contactno" placeholder="Enter your Number" />
                                     <span class="errorColor">* <?php if (isset($contactnoError)) {
                                                                     echo $contactnoError;
-                                                                } ?> </span>
+                                                                } ?> <span>
+                                            <span class="errorColor"><?php if (isset($contactnoError2)) {
+                                                                            echo $contactnoError2;
+                                                                        } ?> </span>
                                 </td>
                             </tr>
                             <tr>
@@ -166,6 +172,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <span class="errorColor">* <?php if (isset($emailError)) {
                                                                     echo $emailError;
                                                                 } ?> </span>
+                                    <span class="errorColor"><?php if (isset($emailError2)) {
+                                                                    echo $emailError2;
+                                                                } ?> </span>
                                 </td>
                             </tr>
                             <tr>
@@ -176,6 +185,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="password" name="password" placeholder="Enter your Password" />
                                     <span class="errorColor">* <?php if (isset($passwordError)) {
                                                                     echo $passwordError;
+                                                                } ?> </span>
+                                    <span class="errorColor"> <?php if (isset($passwordError2)) {
+                                                                    echo $passwordError2;
                                                                 } ?> </span>
                                 </td>
                             </tr>
