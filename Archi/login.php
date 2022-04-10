@@ -30,8 +30,11 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <style>
     .divider:after,
@@ -67,23 +70,25 @@ if (isset($_POST['submit'])) {
 
                         <!-- Submit button -->
                         <button type="submit" name="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                        <!-- forgot password -->
+                        <div class="text-center mt-4">
+                            <a href="forgot_password.php">Forgot password?</a>
+                        </div>
 
                         <div class="divider d-flex align-items-center my-4">
                             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                         </div>
 
                         <div class="d-grid gap-2 col-6 mx-auto mb-5">
-                            <a class="btn btn-primary btn-xs col-lg-12 " style="background-color: #3b5998;border-radius: 8px;" href="login.php" role="button">
-                                <i class="fab fa-facebook-f me-2"></i>Login With Username
-                            </a>
+                            <a class="btn col-lg-12" style="background-color: #F24A72; color: white;  border-radius: 8px;" href="signup.php" role="button"><i class="fa-solid fa-user-plus me-3"></i></i>Signup</a>
 
-                            <a class="btn btn-primary btn-xs col-lg-12" style="background-color: #3b5998;border-radius: 8px;" href="#!" role="button">
-                                <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
-                            </a>
+                            <a class="btn col-lg-12" style="background-color: #3b5998;color: white; border-radius: 8px;" href="#!" role="button">
+                                <i class="fa-brands fa-facebook-f me-3"></i>Continue with Facebook</a>
 
-                            <a class="btn btn-primary btn-xs col-lg-12" style="background-color: #55acee;border-radius: 8px;" href="#!" role="button">
-                                <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
+                            <a class="btn col-lg-12" style="background-color: #55acee;color: white;border-radius: 8px;" href="#!" role="button">
+                                <i class="fa-brands fa-twitter me-3"></i>Continue with Twitter</a>
                         </div>
+
 
                     </form>
                 </div>
